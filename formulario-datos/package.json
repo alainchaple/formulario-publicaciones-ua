@@ -1,0 +1,12 @@
+{
+  "name": "form-recogida-datos",
+  "version": "1.0.0",
+  "description": "Formulario web sencillo para recopilar datos y guardarlos en CSV",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

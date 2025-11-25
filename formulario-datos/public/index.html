@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de recopilación y actualización de publicaciones científicas de la Universidad Autónoma de Chile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --ua-red: #BD1620;
+      --ua-red-dark: #981019;
+      --ua-gray-bg: #f4f4f6;
+      --ua-border: #d3d3dd;
+      --ua-text: #222222;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--ua-gray-bg);
+      color: var(--ua-text);
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 900px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--ua-border);
+      padding: 2rem 2.5rem 2.5rem;
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .logo-container img {
+      width: 140px;
+      height: auto;
+    }
+
+    .header-text {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .header-text h1 {
+      font-size: 1.5rem;
+      margin: 0 0 0.5rem 0;
+      color: var(--ua-red);
+      font-weight: 700;
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    form {
+      margin-top: 1rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .required {
+      color: var(--ua-red);
+    }
+
+    input,
+    textarea,
+    select {
+      padding: 0.5rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #c3c3cf;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+      background-color: #ffffff;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--ua-red);
+      box-shadow: 0 0 0 2px rgba(189, 22, 32, 0.18);
+      background-color: #fffefe;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    small {
+      display: block;
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 0.15rem;
+    }
+
+    .actions {
+      margin-top: 2rem;
+      text-align: right;
+    }
+
+    button {
+      padding: 0.7rem 1.6rem;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--ua-red);
+      color: #ffffff;
+      box-shadow: 0 6px 12px rgba(189, 22, 32, 0.35);
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    button:hover {
+      background: var(--ua-red-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(152, 16, 25, 0.45);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(152, 16, 25, 0.3);
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 1.5rem 1.25rem 2rem;
+      }
+
+      .header-text h1 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <div class="card">
+
+      <!-- LOGO -->
+      <div class="logo-container">
+        <img src="logo_ua.png" alt="Logo Universidad Autónoma de Chile">
+      </div>
+
+      <div class="header-text">
+        <h1>Formulario de recopilación y actualización de publicaciones científicas de la Universidad Autónoma de Chile</h1>
+        <p>Por favor complete todos los campos marcados con <span class="required">*</span>.</p>
+      </div>
+
+      <form action="/submit" method="POST">
+        <div class="form-grid">
+
+          <!-- Nombre -->
+          <div class="form-group">
+            <label for="nombre">Nombre <span class="required">*</span></label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+
+          <!-- Primer Apellido -->
+          <div class="form-group">
+            <label for="primer_apellido">Primer Apellido <span class="required">*</span></label>
+            <input type="text" id="primer_apellido" name="primer_apellido" required>
+          </div>
+
+          <!-- Segundo Apellido -->
+          <div class="form-group">
+            <label for="segundo_apellido">Segundo Apellido</label>
+            <input type="text" id="segundo_apellido" name="segundo_apellido">
+          </div>
+
+          <!-- ORCID -->
+          <div class="form-group">
+            <label for="orcid">Registro ORCID <span class="required">*</span></label>
+            <input
+              type="text"
+              id="orcid"
+              name="orcid"
+              placeholder="0000-0000-0000-0000"
+              pattern="^\d{4}-\d{4}-\d{4}-\d{4}$"
+              required>
+            <small>Debe introducirse exactamente en el formato 0000-0000-0000-0000.</small>
+          </div>
+
+          <!-- Posición -->
+          <div class="form-group">
+            <label for="posicion">Posición <span class="required">*</span></label>
+            <select id="posicion" name="posicion" required>
+              <option value="">Seleccione una opción</option>
+              <option value="Académico/Investigador">Académico/Investigador</option>
+              <option value="Estudiante Doctorado">Estudiante Doctorado</option>
+              <option value="Estudiante Pregrado">Estudiante Pregrado</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+
+          <!-- Doctorado -->
+          <div class="form-group">
+            <label for="doctorado">Miembro del Doctorado al que pertenece <span class="required">*</span></label>
+            <select id="doctorado" name="doctorado" required>
+              <option value="">Seleccione una opción</option>
+              <option value="Ciencias Aplicadas">Ciencias Aplicadas</option>
+              <option value="Ciencias Biomédicas">Ciencias Biomédicas</option>
+              <option value="Ambos">Ambos (Ciencias Aplicadas y Ciencias Biomédicas)</option>
+              <option value="Ninguno">Ninguno</option>
+            </select>
+            <small>Seleccione “Ambos” si esta publicación debe registrarse en los dos programas de doctorado.</small>
+          </div>
+
+          <!-- Título del artículo -->
+          <div class="form-group full-width">
+            <label for="titulo_articulo">Título del artículo <span class="required">*</span></label>
+            <input type="text" id="titulo_articulo" name="titulo_articulo" required>
+            <small>Ingrese el título en el idioma en que fue escrito.</small>
+          </div>
+
+          <!-- Año -->
+          <div class="form-group">
+            <label for="anio">Año <span class="required">*</span></label>
+            <input type="number" id="anio" name="anio" min="1900" max="2100" required>
+          </div>
+
+          <!-- DOI -->
+          <div class="form-group">
+            <label for="doi">DOI</label>
+            <input type="text" id="doi" name="doi">
+          </div>
+
+          <!-- URL -->
+          <div class="form-group full-width">
+            <label for="url">URL <span class="required">*</span></label>
+            <input type="url" id="url" name="url" required>
+          </div>
+
+          <!-- Revista -->
+          <div class="form-group full-width">
+            <label for="revista">Revista <span class="required">*</span></label>
+            <input type="text" id="revista" name="revista" required>
+          </div>
+
+          <!-- Cuartil -->
+          <div class="form-group">
+            <label for="cuartil">Cuartil de la revista <span class="required">*</span></label>
+            <select id="cuartil" name="cuartil" required>
+              <option value="">Seleccione una opción</option>
+              <option value="Q1">Q1</option>
+              <option value="Q2">Q2</option>
+              <option value="Q3">Q3</option>
+              <option value="Q4">Q4</option>
+            </select>
+          </div>
+
+          <!-- Indexación -->
+          <div class="form-group">
+            <label for="indexacion">Indexación <span class="required">*</span></label>
+            <select id="indexacion" name="indexacion" required>
+              <option value="">Seleccione una opción</option>
+              <option value="Scopus">Scopus</option>
+              <option value="WoS">WoS</option>
+              <option value="WoS & Scopus">WoS & Scopus</option>
+            </select>
+          </div>
+
+          <!-- Factor de Impacto -->
+          <div class="form-group">
+            <label for="factor_impacto">Factor de Impacto <span class="required">*</span></label>
+            <input type="number" step="0.001" id="factor_impacto" name="factor_impacto" required>
+          </div>
+
+          <!-- Línea de investigación -->
+          <div class="form-group">
+            <label for="linea_investigacion">Línea de investigación <span class="required">*</span></label>
+            <select id="linea_investigacion" name="linea_investigacion" required>
+              <option value="">Seleccione una opción</option>
+              <option value="Biotecnología">Biotecnología</option>
+              <option value="Energía">Energía</option>
+              <option value="Medio Ambiente">Medio Ambiente</option>
+              <option value="No Aplica">No Aplica</option>
+            </select>
+          </div>
+
+          <!-- Liderazgo -->
+          <div class="form-group">
+            <label for="liderazgo">Liderazgo <span class="required">*</span></label>
+            <select id="liderazgo" name="liderazgo" required>
+              <option value="">Seleccione una opción</option>
+              <option value="PA">PA (Primer Autor)</option>
+              <option value="CoA">CoA (Coautor)</option>
+              <option value="AC">AC (Autor Corresponsal)</option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
