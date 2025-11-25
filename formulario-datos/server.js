@@ -3,14 +3,15 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
+// Ruta del archivo CSV
 const DATA_FILE = path.join(__dirname, 'data.csv');
 
-// Servir archivos estáticos (HTML) desde la carpeta "public"
+// Servir archivos estáticos desde carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Leer datos enviados por formularios
+// Leer datos enviados desde formularios
 app.use(express.urlencoded({ extended: true }));
 
 // Crear archivo CSV con encabezados si no existe
@@ -41,9 +42,8 @@ app.post('/submit', (req, res) => {
     liderazgo
   } = req.body;
 
-  // --- Validación del formato ORCID en el servidor ---
+  // --- Validación ORCID ---
   const orcidRegex = /^\d{4}-\d{4}-\d{4}-\d{4}$/;
-
   if (!orcidRegex.test(orcid)) {
     return res
       .status(400)
@@ -51,22 +51,21 @@ app.post('/submit', (req, res) => {
         'El ORCID no tiene el formato válido (0000-0000-0000-0000). Por favor, vuelva atrás y corrija el valor introducido.'
       );
   }
-  // ---------------------------------------------------
+  // -------------------------
 
   const timestamp = new Date().toISOString();
 
-  // Escapar comillas para no romper el CSV
+  // Escapar valores para evitar romper el CSV
   const escapeCSV = (value) =>
     `"${String(value || '').replace(/"/g, '""')}"`;
 
-  // Si selecciona "Ambos", generamos dos valores de doctorado
+  // Si "Ambos", se crean dos filas
   const doctoradoValues =
     doctorado === 'Ambos'
       ? ['Ciencias Aplicadas', 'Ciencias Biomédicas']
       : [doctorado];
 
-  // Construimos una o dos líneas según corresponda
-  let lineas = '';
+  let lineasCSV = '';
 
   doctoradoValues.forEach((docVal) => {
     const linea = [
@@ -76,7 +75,7 @@ app.post('/submit', (req, res) => {
       escapeCSV(segundo_apellido),
       escapeCSV(orcid),
       escapeCSV(posicion),
-      escapeCSV(docVal), // aquí usamos el doctorado específico
+      escapeCSV(docVal),
       escapeCSV(titulo_articulo),
       escapeCSV(anio),
       escapeCSV(doi),
@@ -89,20 +88,36 @@ app.post('/submit', (req, res) => {
       escapeCSV(liderazgo)
     ].join(',') + '\n';
 
-    lineas += linea;
+    lineasCSV += linea;
   });
 
-  fs.appendFile(DATA_FILE, lineas, (err) => {
+  // Guardar datos en el CSV
+  fs.appendFile(DATA_FILE, lineasCSV, (err) => {
     if (err) {
       console.error('Error al guardar los datos:', err);
       return res.status(500).send('Ocurrió un error al guardar los datos.');
     }
-    // Después de guardar, redirige a la página de gracias
+
+    // Redirigir a página de agradecimiento
     res.redirect('/gracias.html');
+  });
+});
+
+// -------------------------------------------
+// NUEVA RUTA PARA DESCARGAR EL CSV
+// -------------------------------------------
+app.get('/data.csv', (req, res) => {
+  res.download(DATA_FILE, 'publicaciones_ua.csv', (err) => {
+    if (err) {
+      console.error('Error al descargar el archivo:', err);
+      if (!res.headersSent) {
+        res.status(500).send('No se pudo descargar el archivo de datos.');
+      }
+    }
   });
 });
 
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
