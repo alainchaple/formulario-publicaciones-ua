@@ -5,8 +5,18 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+// Token de administración para resetear el CSV (defínelo en Render)
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN;
+
 // Ruta del archivo CSV
 const DATA_FILE = path.join(__dirname, 'data.csv');
+
+// Función para crear/reinicializar el CSV con encabezados
+const escribirEncabezadosCSV = () => {
+  const encabezados =
+    'timestamp,nombre,primer_apellido,segundo_apellido,orcid,posicion,doctorado,titulo_articulo,anio,doi,url,revista,cuartil,indexacion,factor_impacto,linea_investigacion,liderazgo\n';
+  fs.writeFileSync(DATA_FILE, encabezados, 'utf8');
+};
 
 // Servir archivos estáticos desde carpeta "public"
 app.use(express.static(path.join(__dirname, 'public')));
@@ -16,9 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Crear archivo CSV con encabezados si no existe
 if (!fs.existsSync(DATA_FILE)) {
-  const encabezados =
-    'timestamp,nombre,primer_apellido,segundo_apellido,orcid,posicion,doctorado,titulo_articulo,anio,doi,url,revista,cuartil,indexacion,factor_impacto,linea_investigacion,liderazgo\n';
-  fs.writeFileSync(DATA_FILE, encabezados, 'utf8');
+  escribirEncabezadosCSV();
 }
 
 // Ruta que recibe los datos del formulario
@@ -104,7 +112,7 @@ app.post('/submit', (req, res) => {
 });
 
 // -------------------------------------------
-// NUEVA RUTA PARA DESCARGAR EL CSV
+// Ruta para descargar el CSV con todos los datos
 // -------------------------------------------
 app.get('/data.csv', (req, res) => {
   res.download(DATA_FILE, 'publicaciones_ua.csv', (err) => {
@@ -115,6 +123,28 @@ app.get('/data.csv', (req, res) => {
       }
     }
   });
+});
+
+// -------------------------------------------
+// Ruta ADMIN para resetear el CSV (solo con token)
+// -------------------------------------------
+app.get('/admin/reset', (req, res) => {
+  const token = req.query.token;
+
+  // Si no hay token configurado o no coincide, no permitir
+  if (!ADMIN_TOKEN || token !== ADMIN_TOKEN) {
+    console.warn('Intento NO autorizado de resetear el CSV.');
+    return res.status(403).send('No autorizado para resetear los datos.');
+  }
+
+  try {
+    escribirEncabezadosCSV();
+    console.log('CSV reseteado por administrador.');
+    res.send('El archivo de datos ha sido reseteado correctamente.');
+  } catch (err) {
+    console.error('Error al resetear el CSV:', err);
+    res.status(500).send('Ocurrió un error al resetear el archivo de datos.');
+  }
 });
 
 // Iniciar servidor
