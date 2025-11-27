@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Importación masiva de publicaciones científicas - Universidad Autónoma de Chile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --ua-red: #BD1620;
+      --ua-red-dark: #981019;
+      --ua-gray-bg: #f4f4f6;
+      --ua-border: #d3d3dd;
+      --ua-text: #222222;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--ua-gray-bg);
+      color: var(--ua-text);
+    }
+
+    .page-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 900px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--ua-border);
+      padding: 2rem 2.5rem 2.5rem;
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .logo-container img {
+      width: 140px;
+      height: auto;
+    }
+
+    .header-text {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .header-text h1 {
+      font-size: 1.5rem;
+      margin: 0 0 0.5rem 0;
+      color: var(--ua-red);
+      font-weight: 700;
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .top-links {
+      margin-top: 0.75rem;
+      text-align: right;
+      font-size: 0.85rem;
+    }
+
+    .top-links a {
+      color: var(--ua-red);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .top-links a:hover {
+      text-decoration: underline;
+    }
+
+    form {
+      margin-top: 1rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .required {
+      color: var(--ua-red);
+    }
+
+    input,
+    select {
+      padding: 0.5rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #c3c3cf;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+      background-color: #ffffff;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--ua-red);
+      box-shadow: 0 0 0 2px rgba(189, 22, 32, 0.18);
+      background-color: #fffefe;
+    }
+
+    small {
+      display: block;
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 0.15rem;
+    }
+
+    .actions {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 0.7rem 1.6rem;
+      border: none;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--ua-red);
+      color: #ffffff;
+      box-shadow: 0 6px 12px rgba(189, 22, 32, 0.35);
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--ua-red-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 16px rgba(152, 16, 25, 0.45);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(152, 16, 25, 0.3);
+    }
+
+    .btn-link {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.9rem;
+      color: var(--ua-red);
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .btn-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 1.5rem 1.25rem 2rem;
+      }
+
+      .header-text h1 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="card">
+
+      <!-- LOGO -->
+      <div class="logo-container">
+        <img src="logo_ua.png" alt="Logo Universidad Autónoma de Chile">
+      </div>
+
+      <div class="header-text">
+        <h1>Importación masiva de publicaciones científicas</h1>
+        <p>
+          Complete sus datos generales y luego cargue un archivo Excel con múltiples publicaciones.
+          Los datos personales se aplicarán a todos los registros importados.
+        </p>
+      </div>
+
+      <div class="top-links">
+        ¿Prefiere ingresar una sola publicación?
+        <a href="/">Volver al formulario individual</a>
+      </div>
+
+      <form action="/import-excel" method="POST" enctype="multipart/form-data">
+        <div class="form-grid">
+
+          <!-- Nombre -->
+          <div class="form-group">
+            <label for="nombre">Nombre <span class="required">*</span></label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+
+          <!-- Primer Apellido -->
+          <div class="form-group">
+            <label for="primer_apellido">Primer Apellido <span class="required">*</span></label>
+            <input type="text" id="primer_apellido" name="primer_apellido" required>
+          </div>
+
+          <!-- Segundo Apellido -->
+          <div class="form-group">
+            <label for="segundo_apellido">Segundo Apellido</label>
+            <input type="text" id="segundo_apellido" name="segundo_apellido">
+          </div>
+
+          <!-- ORCID -->
+          <div class="form-group">
+            <label for="orcid">Registro ORCID <span class="required">*</span></label>
+            <input
+              type="text"
+              id="orcid"
+              name="orcid"
+              placeholder="0000-0000-0000-0000"
+              pattern="^\d{4}-\d{4}-\d{4}-\d{4}$"
+              required>
+            <small>Debe introducirse exactamente en el formato 0000-0000-0000-0000.</small>
+          </div>
+
+          <!-- Posición -->
+          <div class="form-group">
+            <label for="posicion">Posición <span class="required">*</span></label>
+            <select id="posicion" name="posicion" required>
+              <option value="">Seleccione una opción</option>
+              <option value="Académico/Investigador">Académico/Investigador</option>
+              <option value="Estudiante Doctorado">Estudiante Doctorado</option>
+              <option value="Estudiante Pregrado">Estudiante Pregrado</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+
+          <!-- Doctorado -->
+          <div class="form-group">
+            <label for="doctorado">Miembro del Doctorado al que pertenece <span class="required">*</span></label>
+            <select id="doctorado" name="doctorado" required>
+              <option value="">Seleccione una opción</option>
+              <option value="Ciencias Aplicadas">Ciencias Aplicadas</option>
+              <option value="Ciencias Biomédicas">Ciencias Biomédicas</option>
+              <option value="Ambos">Ambos (Ciencias Aplicadas y Ciencias Biomédicas)</option>
+              <option value="Ninguno">Ninguno</option>
+            </select>
+            <small>Seleccione “Ambos” si las publicaciones deben registrarse en los dos programas de doctorado.</small>
+          </div>
+
+          <!-- Archivo Excel -->
+          <div class="form-group full-width">
+            <label for="excelFile">Archivo Excel con publicaciones <span class="required">*</span></label>
+            <input
+              type="file"
+              id="excelFile"
+              name="excelFile"
+              accept=".xlsx,.xls"
+              required>
+            <small>
+              Descargue primero la plantilla, complete una fila por artículo y luego cargue el archivo.
+              <br>
+              👉 <a href="/plantilla_publicaciones.xlsx">Descargar plantilla de publicaciones (.xlsx)</a>
+            </small>
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <a href="/" class="btn-link">Volver al formulario individual</a>
+          <button type="submit" class="btn-primary">Importar publicaciones</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
