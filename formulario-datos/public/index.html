@@ -72,6 +72,22 @@
       color: #555;
     }
 
+    .top-links {
+      margin-top: 0.75rem;
+      text-align: right;
+      font-size: 0.85rem;
+    }
+
+    .top-links a {
+      color: var(--ua-red);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .top-links a:hover {
+      text-decoration: underline;
+    }
+
     form {
       margin-top: 1rem;
     }
@@ -187,6 +203,12 @@
       <div class="header-text">
         <h1>Formulario de recopilación y actualización de publicaciones científicas de la Universidad Autónoma de Chile</h1>
         <p>Por favor complete todos los campos marcados con <span class="required">*</span>.</p>
+      </div>
+
+      <!-- Enlace a importación masiva -->
+      <div class="top-links">
+        ¿Desea registrar varias publicaciones a la vez?
+        <a href="/importar">Use la importación masiva desde Excel</a>.
       </div>
 
       <form action="/submit" method="POST">
