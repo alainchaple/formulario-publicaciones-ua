@@ -1,5 +1,4 @@
-Aquí tienes un **README.md profesional**, claro y completo para tu repositorio de GitHub.
-Incluye:
+# Contenido
 
 * Descripción del proyecto
 * Requisitos
@@ -9,8 +8,6 @@ Incluye:
 * Variables de entorno (ADMIN_TOKEN)
 * Despliegue en Render
 * Créditos
-
-Puedes copiar y pegar tal cual en tu repositorio:
 
 ---
 
