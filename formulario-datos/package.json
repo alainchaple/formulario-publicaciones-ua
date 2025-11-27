@@ -1,12 +1,17 @@
 {
   "name": "form-recogida-datos",
   "version": "1.0.0",
-  "description": "Formulario web sencillo para recopilar datos y guardarlos en CSV",
+  "description": "Formulario web para recopilación e importación masiva de publicaciones científicas. Guarda datos en CSV y soporta importación desde Excel.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "xlsx": "^0.18.5",
+    "cors": "^2.8.5"
   }
 }
+
+
